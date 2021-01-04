@@ -61,7 +61,7 @@ func main() {
 		speed = int(fps - r.GuiSlider(r.Rectangle{X: 150, Y: 0, Width: 100, Height: 30}, "Speed: 0", "1", float32(fps-speed)/fps, 0, 1)*fps)
 
 		if !gameStarted {
-			nS = int(r.GuiSlider(r.Rectangle{X: 310, Y: 0, Width: 100, Height: 30}, "Size: 5", "100", float32(nS), 5, 100))
+			nS = int(r.GuiSlider(r.Rectangle{X: 310, Y: 0, Width: 300, Height: 30}, "Size: 5", "500", float32(nS), 5, 500))
 
 			if nS != nSo {
 				nSt = timeSince
