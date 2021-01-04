@@ -13,6 +13,7 @@ type board struct {
 	Height       int
 	X            int
 	Y            int
+	HasLines     bool
 }
 
 func newBoard(w, h int) board {
@@ -26,10 +27,17 @@ func newBoard(w, h int) board {
 }
 
 func (b *board) draw() {
+	// Pieces
 	height := b.Width / len(b.Board)
 	width := b.Height / len(b.Board[0])
 	for y := 0; y < len(b.Board); y++ {
+		if b.HasLines {
+			r.DrawLine(b.X, b.Y+y*height, b.X+b.Width, b.Y+y*height, r.Gray)
+		}
 		for x := 0; x < len(b.Board[y]); x++ {
+			if y == 0 && b.HasLines {
+				r.DrawLine(x*width+b.X, b.Y, x*width+b.X, b.Y+b.Height, r.Gray)
+			}
 			if b.Board[y][x] {
 				r.DrawRectangle(x*width+b.X, y*height+b.Y, width, height, r.RayWhite)
 			}

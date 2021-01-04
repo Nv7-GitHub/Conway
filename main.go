@@ -22,6 +22,7 @@ func main() {
 	b.Board[1][2] = true
 	b.Board[3][1] = true
 	b.Board[3][2] = true
+	b.HasLines = true
 	b.Width = WIDTH
 	b.Height = HEIGHT
 	b.Y = 30
@@ -59,9 +60,10 @@ func main() {
 			gameStarted = !gameStarted
 		}
 		speed = int(fps - r.GuiSlider(r.Rectangle{X: 150, Y: 0, Width: 100, Height: 30}, "Speed: 0", "1", float32(fps-speed)/fps, 0, 1)*fps)
+		b.HasLines = r.GuiCheckBox(r.Rectangle{X: 260, Y: 0, Width: 40, Height: 30}, "Lines", b.HasLines)
 
 		if !gameStarted {
-			nS = int(r.GuiSlider(r.Rectangle{X: 310, Y: 0, Width: 300, Height: 30}, "Size: 5", "500", float32(nS), 5, 500))
+			nS = int(r.GuiSlider(r.Rectangle{X: 375, Y: 0, Width: 250, Height: 30}, "Size: 5", "500", float32(nS), 5, 500))
 
 			if nS != nSo {
 				nSt = timeSince
@@ -81,6 +83,7 @@ func main() {
 						}
 					}
 				}
+				newBoard.HasLines = b.HasLines
 				b = newBoard
 				size = nS
 				nSo = nS
