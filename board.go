@@ -52,3 +52,40 @@ func (b *board) events() {
 	}
 	b.WasMouseDown = r.IsMouseButtonDown(r.MouseLeftButton)
 }
+
+func (b *board) generation() {
+	future := make([][]bool, len(b.Board))
+	for i := 0; i < len(b.Board); i++ {
+		future[i] = make([]bool, len(b.Board[i]))
+	}
+
+	for y := 0; y < len(b.Board); y++ {
+		for x := 0; x < len(b.Board[y]); x++ {
+			nbrs := 0
+			for yOff := -1; yOff < 2; yOff++ {
+				for xOff := -1; xOff < 2; xOff++ {
+					yP := y + yOff
+					xP := x + xOff
+					if ((yP >= 0) && (yP < len(b.Board)) && (xP >= 0 && xP < len(b.Board[y]))) && (b.Board[yP][xP]) {
+						nbrs++
+					}
+				}
+			}
+
+			if b.Board[y][x] {
+				nbrs--
+			}
+
+			if b.Board[y][x] && (nbrs < 2) {
+				future[y][x] = false
+			} else if b.Board[y][x] && (nbrs > 3) {
+				future[y][x] = false
+			} else if !b.Board[y][x] && (nbrs == 3) {
+				future[y][x] = true
+			} else {
+				future[y][x] = b.Board[y][x]
+			}
+		}
+	}
+	b.Board = future
+}
